@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <!-- Meta viewport agar tampilan responsif di HP dan tablet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste2Worth - Bank Sampah Digital Medan</title>
+
+    <!-- Google Fonts: Poppins untuk tipografi utama -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome: library ikon (fa-recycle, fa-calculator, dll) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS (Animate On Scroll): animasi elemen saat di-scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- File CSS utama website -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ============================================================
+         HEADER: navigasi tetap (fixed) di atas halaman
+         Berisi logo, menu navigasi, tombol login/daftar, hamburger
+         ============================================================ -->
+    <header class="header" id="header">
+        <div class="nav-container">
+
+            <!-- Logo: ikon daur ulang + nama website -->
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+                <span>Waste2<span class="highlight">Worth</span></span>
+            </div>
+
+            <!-- Menu navigasi utama antar halaman -->
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <!-- class="active" menandai halaman yang sedang dibuka -->
+                    <li><a href="index.html" class="active">Beranda</a></li>
+                    <li><a href="layanan.html">Layanan</a></li>
+                    <li><a href="riwayat.html">Riwayat</a></li>
+                    <li><a href="edukasi.html">Edukasi</a></li>
+                </ul>
+            </nav>
+
+            <!-- Tombol Masuk dan Daftar: membuka modal auth via JavaScript -->
+            <div class="auth-buttons">
+                <a href="#" class="btn-login" onclick="openModal('login')">Masuk</a>
+                <a href="#" class="btn-register" onclick="openModal('register')">Daftar</a>
+            </div>
+
+            <!-- Hamburger menu: hanya muncul di tampilan mobile (<768px) -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+         MODAL LOGIN / REGISTER
+         Muncul sebagai popup di tengah layar saat tombol diklik
+         Dikontrol oleh fungsi openModal() dan closeModal() di script.js
+         ============================================================ -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <!-- Tombol X untuk menutup modal -->
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+
+            <!-- Tab switching: Masuk / Daftar -->
+            <div class="modal-tabs">
+                <button class="tab-auth active" onclick="switchAuthTab('login')">Masuk</button>
+                <button class="tab-auth" onclick="switchAuthTab('register')">Daftar</button>
+            </div>
+
+            <!-- Form Login -->
+            <form id="loginForm" class="auth-form active">
+                <h3>Selamat Datang Kembali</h3>
+                <p>Silakan masuk ke akun Anda</p>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="nama@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth">Masuk</button>
+            </form>
+
+            <!-- Form Register -->
+            <form id="registerForm" class="auth-form">
+                <h3>Buat Akun Baru</h3>
+                <p>Bergabung dengan 15.000+ pengguna di Medan</p>
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" placeholder="Nama Anda" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="nama@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Nomor HP</label>
+                    <input type="tel" placeholder="08##-####-####" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Minimal 8 karakter" required>
+                </div>
+                <button type="submit" class="btn-auth">Daftar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         KONTEN UTAMA HALAMAN (tag <main> untuk semantik HTML5)
+         ============================================================ -->
+    <main>
+
+        <!-- ============================================================
+             SECTION HERO: area utama paling atas dengan background gambar
+             Menampilkan judul, statistik animasi, dan tombol CTA
+             ============================================================ -->
+        <section class="hero hero-bg-image">
+            <div class="container">
+                <div class="hero-content" data-aos="fade-up">
+                    <!-- Tag kecil di atas judul -->
+                    <span class="hero-subtitle">#UbahSampahJadiBerkah</span>
+
+                    <h1>Ubah Sampahmu,<br><span class="highlight">Ubah Masa Depan</span></h1>
+
+                    <p>Platform bank sampah digital pertama di Medan yang menghubungkan masyarakat dengan ekonomi sirkular. Dapatkan keuntungan sambil menyelamatkan lingkungan!</p>
+
+                    <!-- Statistik animasi: angka dihitung dari 0 oleh animateCounter() di script.js -->
+                    <div class="hero-stats">
+                        <!-- data-count adalah target angka akhir animasi -->
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="15234">0</span>
+                            <span class="stat-label">Pengguna Aktif</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="8567">0</span>
+                            <span class="stat-label">Ton Sampah</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="48">0</span>
+                            <span class="stat-label">Bank Sampah</span>
+                        </div>
+                    </div>
+
+                    <!-- Tombol aksi utama -->
+                    <div class="hero-buttons">
+                        <!-- btn-pulse: animasi denyut berulang (CSS animation) -->
+                        <a href="#" class="btn btn-primary btn-pulse" onclick="openModal('register')">
+                            <i class="fas fa-user-plus"></i> Daftar Sekarang
+                        </a>
+                        <a href="layanan.html" class="btn btn-secondary">
+                            <i class="fas fa-leaf"></i> Lihat Layanan
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Gelombang SVG dekoratif di bawah hero -->
+                <div class="hero-wave">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M0,0L46.2,16C92.3,32,184.6,64,276.9,74.7C369.2,85,461.5,75,553.8,58.7C646.2,43,738.5,21,830.8,26.7C923.1,32,1015.4,64,1107.7,74.7C1200,85,1200,85,1200,85L1200,120L1107.7,120C1015.4,120,923.1,120,830.8,120C738.5,120,646.2,120,553.8,120C461.5,120,369.2,120,276.9,120C184.6,120,92.3,120,46.2,120L0,120Z" class="wave-fill"></path>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION VIDEO: video edukasi tentang dampak sampah
+             ============================================================ -->
+        <section class="video-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Video Edukasi</span>
+                    <h2>Lihat Dampak <span class="highlight">Sampah</span> Terhadap Lingkungan</h2>
+                    <p>Simak video berikut untuk memahami pentingnya daur ulang</p>
+                </div>
+
+                <!-- Video player dengan poster (thumbnail) sebelum diputar -->
+                <div class="video-wrapper" data-aos="zoom-in">
+                    <div class="video-container">
+                        <video
+                            src="video/sampah-lingkungan.mp4"
+                            controls
+                            poster="gambar/sampah-lingkungan.png">
+                        </video>
+                    </div>
+                    <div class="video-description">
+                        <p><i class="fas fa-info-circle"></i> <br>
+                            Video ini menunjukkan pentingnya daur ulang sampah plastik untuk menjaga lingkungan. Sampah yang kita hasilkan setiap hari dapat diolah menjadi produk bernilai ekonomi. Mari bersama-sama kurangi sampah mulai dari diri sendiri!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION FITUR UNGGULAN: 4 kartu layanan utama website
+             ============================================================ -->
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Layanan Kami</span>
+                    <h2>Fitur <span class="highlight">Unggulan</span></h2>
+                    <p>Solusi lengkap untuk pengelolaan sampah di Kota Medan</p>
+                </div>
+
+                <!-- Grid 4 kolom untuk kartu fitur -->
+                <!-- data-aos-delay: setiap kartu muncul berurutan (100ms, 200ms, dst) -->
+                <div class="feature-grid">
+                    <div class="card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <h3>Peta Bank Sampah</h3>
+                        <p>Temukan 48 bank sampah di seluruh Medan dengan informasi lengkap lokasi dan jam operasional.</p>
+                        <a href="layanan.html" class="card-link">Cari Lokasi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-icon"><i class="fas fa-calculator"></i></div>
+                        <h3>Kalkulator Nilai</h3>
+                        <p>Hitung estimasi nilai rupiah dari sampah Anda berdasarkan harga pasar terkini.</p>
+                        <a href="layanan.html" class="card-link">Hitung Sekarang <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>Edukasi &amp; Tutorial</h3>
+                        <p>Pelajari cara memilah sampah dan membuat kerajinan daur ulang dari para ahli.</p>
+                        <a href="edukasi.html" class="card-link">Pelajari <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="card-icon"><i class="fas fa-shopping-bag"></i></div>
+                        <h3>Marketplace</h3>
+                        <p>Temukan produk kreatif dari hasil daur ulang karya UMKM binaan Medan.</p>
+                        <a href="riwayat.html" class="card-link">Jelajahi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION TESTIMONI: ulasan dari pengguna
+             ============================================================ -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Testimoni</span>
+                    <h2>Apa Kata <span class="highlight">Mereka?</span></h2>
+                    <p>Lebih dari 15.000 pengguna telah bergabung</p>
+                </div>
+
+                <div class="testimonial-grid">
+                    <!-- Kartu testimoni 1 -->
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Luar biasa! Saya sudah setor sampah plastik dan kardus ke Bank Sampah Medan Barat. Prosesnya mudah dan dapat uang tambahan. Lumayan banget!"</p>
+                        <div class="testimonial-author">
+                            <img src="gambar/olin.png" alt="Caroline">
+                            <div>
+                                <h4>Caroline Yuliana Simbolon</h4>
+                                <p>Mahasiswa, Medan Barat</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kartu testimoni 2 -->
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Fitur kalkulator nilainya sangat membantu! Saya bisa estimasi harga sampah sebelum disetor. Pengiriman tepat waktu dan ramah lingkungan."</p>
+                        <div class="testimonial-author">
+                            <img src="gambar/dita.png" alt="ArinaDhita">
+                            <div>
+                                <h4>ArinaDhita Sidabungke</h4>
+                                <p>Mahasiswa, Medan Sunggal</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kartu testimoni 3 -->
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Konsep bank sampah digital ini revolusioner! Sampah yang tadinya tidak berguna sekarang bisa menghasilkan. Rekomendasi untuk warga Medan!"</p>
+                        <div class="testimonial-author">
+                            <img src="gambar/pio.png" alt="Viona">
+                            <div>
+                                <h4>Viona</h4>
+                                <p>Mahasiswa, Medan Timur</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION BERITA: informasi terkini seputar lingkungan Medan
+             ============================================================ -->
+        <section class="news-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Berita Terbaru</span>
+                    <h2>Update <span class="highlight">Lingkungan</span> Medan</h2>
+                    <p>Informasi terkini seputar pengelolaan sampah di Kota Medan</p>
+                </div>
+
+                <div class="news-grid">
+                    <div class="news-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="news-image"><img src="gambar/peresmian.png" alt="Berita peresmian bank sampah"></div>
+                        <div class="news-content">
+                            <span class="news-date"><i class="far fa-calendar"></i> 10 Maret 2026</span>
+                            <h3>Pemko Medan Resmikan 10 Bank Sampah Baru</h3>
+                            <p>Pemerintah Kota Medan meresmikan 10 bank sampah baru di berbagai kecamatan.</p>
+                            <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="news-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="news-image"><img src="gambar/plastiknaik.png" alt="Berita harga plastik naik"></div>
+                        <div class="news-content">
+                            <span class="news-date"><i class="far fa-calendar"></i> 5 Maret 2026</span>
+                            <h3>Harga Sampah Plastik Naik 15% di Maret 2026</h3>
+                            <p>Bank Sampah Medan menaikkan harga beli sampah plastik jenis PET hingga 15%.</p>
+                            <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="news-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="news-image"><img src="gambar/waste2worth.png" alt="Berita penghargaan Waste2Worth"></div>
+                        <div class="news-content">
+                            <span class="news-date"><i class="far fa-calendar"></i> 28 Februari 2026</span>
+                            <h3>Waste2Worth Raih Penghargaan Inovasi Digital</h3>
+                            <p>Platform bank sampah digital Waste2Worth mendapatkan penghargaan inovasi terbaik.</p>
+                            <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION CTA (Call To Action): ajakan untuk daftar
+             ============================================================ -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content" data-aos="zoom-in">
+                    <h2>Siap Menjadi Bagian dari Perubahan?</h2>
+                    <p>Bergabunglah dengan ribuan pengguna di Medan yang telah berkontribusi mengurangi sampah dan mendapatkan keuntungan.</p>
+                    <a href="#" class="btn btn-primary btn-large btn-pulse" onclick="openModal('register')">
+                        <i class="fas fa-user-plus"></i> Daftar Sekarang
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================================
+         FOOTER: informasi kontak, navigasi tambahan, sosial media
+         ============================================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Kolom 1: deskripsi dan sosial media -->
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-recycle"></i>
+                        <span>Waste2Worth</span>
+                    </div>
+                    <p>Platform bank sampah digital pertama di Medan. Mengubah sampah menjadi berkah sejak 2024.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Kolom 2: navigasi halaman -->
+                <div class="footer-col">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="layanan.html">Layanan</a></li>
+                        <li><a href="riwayat.html">Riwayat</a></li>
+                        <li><a href="edukasi.html">Edukasi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 3: layanan tersedia -->
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="layanan.html">Penjemputan Sampah</a></li>
+                        <li><a href="layanan.html">Kalkulator Nilai</a></li>
+                        <li><a href="edukasi.html">Tutorial Daur Ulang</a></li>
+                        <li><a href="riwayat.html">Marketplace</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 4: informasi kontak kantor -->
+                <div class="footer-col">
+                    <h4>Kantor Medan</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Gajah Mada No. 123, Medan Barat</li>
+                        <li><i class="fas fa-phone-alt"></i> (061) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> info@waste2worth-medan.id</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Garis bawah footer: copyright -->
+            <div class="footer-bottom">
+                <p>&copy; 2026 Waste2Worth Medan. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tombol kembali ke atas: muncul otomatis saat scroll ke bawah -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- AOS: library animasi scroll (harus dimuat sebelum script.js) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- File JavaScript utama: semua interaktivitas website -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>

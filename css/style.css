@@ -1,0 +1,2439 @@
+/* ============================================================
+   WASTE2WORTH - BANK SAMPAH DIGITAL MEDAN
+   File      : css/style.css
+   Deskripsi : File CSS utama yang dipakai semua halaman
+   ============================================================ */
+
+
+/* ============================================================
+   RESET CSS
+   Menghapus margin, padding, dan box-sizing default browser
+   agar tampilan konsisten di semua browser
+   ============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ============================================================
+   VARIABEL WARNA (CSS Custom Properties)
+   Mendefinisikan warna utama agar mudah diubah dari satu tempat
+   Digunakan di seluruh file dengan format: var(--nama-variabel)
+   ============================================================ */
+:root {
+    /* Warna hijau: warna utama brand (lingkungan) */
+    --primary-green: #2E7D32;
+    --primary-green-light: #4CAF50;
+    --primary-green-dark: #1B5E20;
+
+    /* Warna oranye: warna aksen / highlight */
+    --primary-orange: #FF9800;
+    --primary-orange-dark: #F57C00;
+
+    /* Warna teks */
+    --text-dark: #263238;   /* teks utama (judul, body) */
+    --text-light: #607D8B;  /* teks sekunder (keterangan, hint) */
+
+    /* Warna background */
+    --bg-light: #F5F9F5;    /* background halaman */
+    --white: #ffffff;
+    --black: #1a1a1a;
+
+    /* Warna abu-abu untuk border dan elemen netral */
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+
+    /* Shadow (bayangan) dengan berbagai ketebalan */
+    --shadow-sm: 0 5px 20px rgba(0,0,0,0.05);
+    --shadow-md: 0 8px 30px rgba(0,0,0,0.1);
+    --shadow-lg: 0 15px 40px rgba(0,0,0,0.15);
+    --shadow-xl: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+
+/* ============================================================
+   BODY: pengaturan global seluruh halaman
+   ============================================================ */
+body {
+    font-family: 'Poppins', sans-serif; /* font dari Google Fonts */
+    color: var(--text-dark);
+    line-height: 1.6;
+    background-color: var(--bg-light);
+    overflow-x: hidden; /* mencegah scroll horizontal yang tidak diinginkan */
+}
+
+
+/* ============================================================
+   CONTAINER: pembatas lebar konten maksimum 1200px, tengah layar
+   ============================================================ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+
+/* ============================================================
+   ANIMASI CSS
+   Digunakan oleh berbagai elemen untuk efek masuk / muncul
+   ============================================================ */
+
+/* Animasi dari bawah ke atas sambil fade in */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Animasi zoom in (membesar dari kecil) */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Animasi denyut / pulse (dipakai tombol CTA utama) */
+@keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4); }
+    70%  { box-shadow: 0 0 0 15px rgba(255, 152, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+}
+
+
+/* ============================================================
+   HEADER: navigasi tetap di atas layar (fixed)
+   Berubah bayangan saat di-scroll (class 'scrolled' ditambah JS)
+   ============================================================ */
+.header {
+    position: fixed;    /* tetap di atas saat scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px); /* efek kaca buram */
+    box-shadow: var(--shadow-sm);
+    z-index: 1000; /* di atas semua elemen lain */
+    transition: all 0.3s;
+}
+
+/* Header saat sudah di-scroll: bayangan lebih tebal */
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--shadow-md);
+}
+
+/* Wrapper navigasi: flex untuk sejajarkan logo, menu, tombol */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Logo website */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-green);
+}
+
+.logo i {
+    font-size: 1.8rem;
+    color: var(--primary-orange);
+}
+
+/* Kata "Worth" dalam logo berwarna oranye */
+.logo .highlight {
+    color: var(--primary-orange);
+}
+
+/* Menu navigasi: horizontal, tanpa bullet */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+/* Link navigasi: efek garis bawah saat hover/aktif */
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+    padding: 5px 0;
+}
+
+/* Garis bawah animasi (muncul dari kiri saat hover) */
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-green), var(--primary-orange));
+    transition: width 0.3s;
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+    width: 100%;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: var(--primary-orange);
+}
+
+/* Tombol auth di header (Masuk / Daftar) */
+.auth-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-login,
+.btn-register {
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+/* Tombol Masuk: outline hijau */
+.btn-login {
+    border: 1px solid var(--primary-green);
+    color: var(--primary-green);
+}
+
+.btn-login:hover {
+    background: var(--primary-green);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Tombol Daftar: solid oranye */
+.btn-register {
+    background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+}
+
+/* Hamburger menu: 3 garis, hanya tampil di mobile */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--primary-green);
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+
+/* ============================================================
+   RESPONSIVE HEADER (Mobile: max-width 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    /* Tampilkan hamburger di mobile */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Menu navigasi tersembunyi di kiri layar (geser keluar) */
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%; /* tersembunyi di luar layar */
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: white;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        gap: 25px;
+        transition: left 0.3s;
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Saat hamburger diklik, class 'active' ditambahkan JS → menu muncul */
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .auth-buttons {
+        margin-left: auto;
+        margin-right: 15px;
+    }
+}
+
+
+/* ============================================================
+   HERO SECTION: area utama paling atas halaman
+   Background gradient hijau tua ke oranye
+   ============================================================ */
+.hero {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-orange) 100%);
+    padding: 140px 0 0;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Konten hero: dibatasi lebar 800px dan ada padding bawah */
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+}
+
+/* Gelombang SVG dekoratif di bawah hero section */
+.hero-wave {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow-x: hidden;
+    line-height: 0;
+}
+
+.hero-wave svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 80px;
+}
+
+/* Gelombang membentang penuh layar (melampaui container) */
+.hero-wave {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+/* Warna isi gelombang SVG = putih (menyambung dengan background bawahnya) */
+.hero-wave .wave-fill {
+    fill: var(--white);
+}
+
+/* Responsif hero */
+@media (max-width: 768px) {
+    .hero { padding: 120px 0 0; }
+    .hero-content { padding-bottom: 50px; }
+    .hero-wave svg { height: 40px; }
+}
+
+@media (max-width: 480px) {
+    .hero-wave svg { height: 30px; }
+}
+
+/* Tag kecil di atas judul hero (#UbahSampahJadiBerkah) */
+.hero-subtitle {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    padding: 8px 25px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+/* Judul utama hero: ukuran responsif dengan clamp() */
+.hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 20px;
+}
+
+/* Teks highlight (oranye) dalam judul hero */
+.hero .highlight {
+    color: var(--primary-orange);
+}
+
+.hero p {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+/* Area statistik: 3 kolom angka animasi */
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+/* Angka statistik: besar, tebal, oranye */
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-orange);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Tombol-tombol hero: flex horizontal */
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   HERO DENGAN BACKGROUND GAMBAR (khusus index.html)
+   Overlay gradient di atas gambar bgindex.png
+   ============================================================ */
+.hero-bg-image {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.85), rgba(27, 94, 32, 0.9)), url('../gambar/bgindex.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* parallax effect */
+    position: relative;
+}
+
+/* Konten di atas gambar harus tampak di depan overlay */
+.hero-bg-image .hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-bg-image .hero-wave {
+    position: relative;
+    z-index: 2;
+}
+
+/* Layer gelap tambahan di atas gambar */
+.hero-bg-image::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+
+/* ============================================================
+   TOMBOL UTAMA (.btn)
+   Digunakan di seluruh halaman untuk CTA dan aksi
+   ============================================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+/* Tombol primer: oranye solid */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
+}
+
+/* Tombol sekunder: transparan dengan border putih (untuk di atas background gelap) */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+}
+
+/* Animasi denyut (pulse) untuk tombol CTA utama */
+.btn-pulse {
+    animation: pulse 2s infinite;
+}
+
+
+/* ============================================================
+   SECTION HEADER: judul + subjudul yang dipakai setiap section
+   ============================================================ */
+.section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 50px;
+}
+
+.section-header h2 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: 10px;
+}
+
+/* Teks oranye dalam judul section */
+.section-header .highlight {
+    color: var(--primary-orange);
+}
+
+/* Tag kecil di atas judul section (misal: "Layanan Kami", "Testimoni") */
+.section-tag {
+    display: inline-block;
+    background: rgba(255, 152, 0, 0.1);
+    color: var(--primary-orange);
+    padding: 5px 18px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+
+/* ============================================================
+   VIDEO SECTION (index.html): video edukasi utama
+   ============================================================ */
+.video-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f5f9f5 0%, #ffffff 100%);
+}
+
+.video-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Container video dengan rounded corner dan bayangan */
+.video-container {
+    position: relative;
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: #000;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.video-container:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+/* Deskripsi di bawah video */
+.video-description {
+    margin-top: 25px;
+    padding: 20px 25px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.video-description:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.video-description p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+
+/* ============================================================
+   FEATURES SECTION (index.html): grid 4 kartu fitur unggulan
+   ============================================================ */
+.features {
+    padding: 80px 0;
+    background: var(--white);
+}
+
+/* Grid 4 kolom untuk kartu fitur */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 0 20px;
+}
+
+/* Kartu fitur: putih, rounded, ada garis warna saat hover */
+.card {
+    background: var(--white);
+    padding: 35px 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Garis warna di atas kartu (muncul saat hover) */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-green), var(--primary-orange));
+    transform: scaleX(0);
+    transition: transform 0.4s;
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Ikon bulat hijau di atas kartu */
+.card-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-green-light), var(--primary-green));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    transition: all 0.3s;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.card-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.card h3 {
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+}
+
+.card p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Link "Cari Lokasi →" di bawah kartu */
+.card-link {
+    color: var(--primary-orange);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: gap 0.3s;
+}
+
+.card-link:hover {
+    gap: 10px; /* panah bergerak saat hover */
+}
+
+
+/* ============================================================
+   TESTIMONI SECTION (index.html): grid 3 kartu ulasan pengguna
+   ============================================================ */
+.testimonials {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Bintang rating */
+.testimonial-rating {
+    color: var(--primary-orange);
+    margin-bottom: 20px;
+}
+
+.testimonial-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+/* Area nama + foto penulis testimoni */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testimonial-author h4 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.testimonial-author p {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+
+/* ============================================================
+   BERITA SECTION (index.html): 3 kartu berita terbaru
+   ============================================================ */
+.news-section {
+    padding: 80px 0;
+    background: var(--white);
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.news-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Gambar berita: zoom saat hover */
+.news-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.1);
+}
+
+.news-content {
+    padding: 20px;
+}
+
+.news-date {
+    font-size: 0.7rem;
+    color: var(--primary-orange);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.news-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.news-content p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+.read-more {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+/* ============================================================
+   CTA SECTION (index.html): area ajakan daftar di atas footer
+   ============================================================ */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+    text-align: center;
+    color: white;
+}
+
+.cta-content h2 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: 15px;
+}
+
+.cta-content p {
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+/* Tombol besar untuk CTA utama */
+.btn-large {
+    padding: 14px 40px;
+    font-size: 1rem;
+}
+
+
+/* ============================================================
+   FOOTER: bagian bawah semua halaman
+   Background gelap dengan teks abu-abu
+   ============================================================ */
+.footer {
+    background: var(--black);
+    color: #999;
+    padding: 60px 0 20px;
+}
+
+/* Grid 4 kolom footer */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.footer-logo i {
+    font-size: 1.8rem;
+    color: var(--primary-orange);
+}
+
+.footer-logo span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.footer-col p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.footer-col h4 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 12px;
+}
+
+.footer-col ul li a {
+    color: #999;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+    color: var(--primary-orange);
+}
+
+/* Daftar kontak dengan ikon */
+.contact-info li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.contact-info i {
+    width: 20px;
+    color: var(--primary-orange);
+}
+
+/* Ikon sosial media footer */
+.footer-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.footer-social a {
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.footer-social a:hover {
+    background: var(--primary-orange);
+    transform: translateY(-3px);
+}
+
+/* Garis copyright di bawah footer */
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   BACK TO TOP: tombol kembali ke atas layar
+   Muncul otomatis saat scroll > 300px (diatur JS)
+   ============================================================ */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background: var(--primary-orange);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    box-shadow: var(--shadow-lg);
+    z-index: 99;
+}
+
+/* Class 'show' ditambahkan JS saat scroll cukup jauh */
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: var(--primary-orange-dark);
+    transform: translateY(-5px);
+}
+
+
+/* ============================================================
+   MODAL: popup login / register
+   Muncul di tengah layar dengan overlay hitam transparan
+   ============================================================ */
+.modal {
+    display: none; /* default tersembunyi */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Kotak isi modal */
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 30px;
+    padding: 35px;
+    position: relative;
+    animation: zoomIn 0.3s;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Tombol X tutup modal */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: var(--primary-orange);
+}
+
+/* Tab Masuk / Daftar di dalam modal */
+.modal-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.tab-auth {
+    flex: 1;
+    padding: 10px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #999;
+    transition: all 0.3s;
+}
+
+/* Tab aktif: garis bawah oranye */
+.tab-auth.active {
+    color: var(--primary-orange);
+    border-bottom: 2px solid var(--primary-orange);
+    margin-bottom: -2px;
+}
+
+/* Form login/register: hanya satu yang tampil (class 'active' diganti JS) */
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.auth-form h3 {
+    margin-bottom: 5px;
+}
+
+.auth-form p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+
+/* ============================================================
+   FORM GROUP: komponen input yang dipakai di modal dan form lain
+   ============================================================ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Input, select, textarea: border abu-abu, berubah oranye saat fokus */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+/* Tombol submit di dalam form auth */
+.btn-auth {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn-auth:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* ============================================================
+   NOTIFIKASI: popup kecil kanan bawah untuk feedback user
+   Ditampilkan oleh fungsi showNotification() di script.js
+   ============================================================ */
+.notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--white);
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2000;
+    transform: translateX(400px); /* tersembunyi di kanan */
+    transition: transform 0.3s;
+}
+
+/* Notifikasi geser masuk saat class 'show' ditambahkan */
+.notification.show {
+    transform: translateX(0);
+}
+
+/* Notifikasi sukses: garis kiri hijau */
+.notification.success {
+    border-left: 4px solid var(--primary-green);
+}
+
+.notification.success i {
+    color: var(--primary-green);
+}
+
+/* Notifikasi error: garis kiri merah */
+.notification.error {
+    border-left: 4px solid #f44336;
+}
+
+.notification.error i {
+    color: #f44336;
+}
+
+
+/* ============================================================
+   RESPONSIVE GLOBAL (Tablet: max-width 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+    /* Grid 4 kolom → 2 kolom */
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Grid 3 kolom → 2 kolom */
+    .testimonial-grid,
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Footer grid 4 kolom → 2 kolom */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE GLOBAL (Mobile: max-width 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    /* Semua grid → 1 kolom */
+    .feature-grid,
+    .testimonial-grid,
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Footer: 1 kolom, tengah */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-logo {
+        justify-content: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .contact-info li {
+        justify-content: center;
+    }
+
+    .hero-stats {
+        gap: 25px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE GLOBAL (HP kecil: max-width 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+    /* Tombol hero: susun vertikal */
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+    }
+}
+/* ============================================================
+   TAMBAHAN CSS - COMMIT 2 (Dita)
+   Tambahkan blok ini di bagian BAWAH file css/style.css
+   Berisi semua style untuk halaman layanan.html
+   ============================================================ */
+
+
+/* ============================================================
+   STATISTIK LAYANAN: 4 kartu angka di atas halaman layanan
+   ============================================================ */
+.stats-services {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+/* Grid 4 kolom untuk halaman layanan */
+.stats-services-grid {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+/* Grid 3 kolom untuk halaman riwayat */
+.stats-services-grid-riwayat {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Kartu statistik individual */
+.stat-service-card {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--bg-light);
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+
+.stat-service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-service-card i {
+    font-size: 2.5rem;
+    color: var(--primary-orange);
+    margin-bottom: 15px;
+}
+
+/* Angka statistik di kartu layanan: hijau, besar */
+.stat-service-card .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-green);
+    display: block;
+}
+
+
+/* ============================================================
+   KALKULATOR NILAI SAMPAH: form pilih lokasi + jenis + berat
+   ============================================================ */
+.calculator-section {
+    padding: 60px 0;
+    background: var(--bg-light);
+}
+
+/* Grid kalkulator: otomatis pindah ke 1 kolom di tablet */
+.calculator-grid {
+    display: grid;
+    gap: 30px;
+}
+
+/* Form kalkulator: putih dengan shadow */
+.calculator-form {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Hasil kalkulasi: gradient hijau */
+.calculator-result {
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+    padding: 35px;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    animation: fadeInUp 0.5s ease; /* animasi muncul saat ditampilkan */
+}
+
+/* Ikon koin di area hasil */
+.result-icon i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary-orange);
+}
+
+.result-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+/* Nilai rupiah utama: besar dan tebal */
+.result-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 10px 0;
+}
+
+/* Rincian perhitungan: harga/kg × berat */
+.price-breakdown {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px 15px;
+    border-radius: 50px;
+    display: inline-block;
+    margin: 15px 0;
+    font-size: 0.85rem;
+}
+
+/* Rekomendasi bank sampah terdekat */
+.bank-recommendation {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 15px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+/* Catatan kecil di bawah hasil */
+.result-note {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 15px;
+}
+
+
+/* ============================================================
+   DAFTAR HARGA SAMPAH: tabel harga per kecamatan
+   ============================================================ */
+.price-table-section {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+/* Wrapper tabel: scroll horizontal di layar kecil */
+.price-table-wrapper {
+    overflow-x: auto;
+}
+
+/* Tabel harga: header hijau, hover abu-abu */
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.price-table th,
+.price-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.price-table th {
+    background: var(--primary-green);
+    color: white;
+    font-weight: 600;
+}
+
+.price-table tr:hover {
+    background: var(--bg-light);
+}
+
+
+/* ============================================================
+   PETA BANK SAMPAH: iframe Google Maps + daftar lokasi
+   ============================================================ */
+.maps-section {
+    padding: 60px 0;
+    background: var(--bg-light);
+}
+
+/* Grid 2 kolom: peta (kiri) + list lokasi (kanan) */
+.maps-wrapper {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+}
+
+.maps-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.maps-container iframe {
+    width: 100%;
+    height: 450px;
+    border-radius: 20px;
+}
+
+/* Panel daftar lokasi bank sampah */
+.maps-list {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.maps-list h3 {
+    margin-bottom: 20px;
+    color: var(--primary-green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* List lokasi: bisa di-scroll jika banyak */
+.maps-list ul {
+    list-style: none;
+    margin-bottom: 20px;
+    max-height: 370px;
+    overflow-y: auto;
+}
+
+/* Link setiap lokasi: hover geser kanan + background oranye muda */
+.location-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    border-radius: 12px;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.location-link:hover {
+    background: rgba(255, 152, 0, 0.1);
+    transform: translateX(5px);
+}
+
+.location-link i:first-child {
+    color: var(--primary-orange);
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+
+.location-link strong {
+    display: block;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+.location-link .distance {
+    font-size: 0.7rem;
+    color: var(--primary-green);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Ikon eksternal link: muncul saat hover */
+.link-icon {
+    margin-left: auto;
+    color: var(--primary-orange);
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.location-link:hover .link-icon {
+    opacity: 1;
+}
+
+/* Tombol buka di Google Maps / Waze */
+.maps-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-map,
+.btn-map-waze {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-map {
+    background: var(--primary-green);
+    color: white;
+}
+
+.btn-map:hover {
+    background: var(--primary-green-dark);
+    transform: translateY(-2px);
+}
+
+.btn-map-waze {
+    background: #1b3b5c;
+    color: white;
+}
+
+.btn-map-waze:hover {
+    background: #0e2a44;
+    transform: translateY(-2px);
+}
+
+.maps-note {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(255, 152, 0, 0.1);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+
+/* ============================================================
+   FORM PENJEMPUTAN SAMPAH: form lengkap pemesanan jemput sampah
+   ============================================================ */
+.pickup-section {
+    padding: 60px 0;
+    background: var(--bg-light);
+}
+
+/* Wrapper form: dibatasi max 900px agar tidak terlalu lebar */
+.pickup-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Form penjemputan: putih, rounded, shadow besar */
+.pickup-form {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Baris form: 2 kolom, otomatis 1 kolom di layar kecil */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Hint teks kecil di bawah input */
+.form-hint {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-top: 5px;
+}
+
+/* Tombol lebar penuh */
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Tombol submit form penjemputan: hijau gelap */
+.btn-submit {
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.4);
+}
+
+/* Class tambahan untuk input dan select di luar form-group (di form layanan) */
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+
+/* ============================================================
+   FAQ SECTION: daftar pertanyaan yang bisa dibuka tutup
+   Dibuka dengan fungsi toggleFaq() di script.js
+   ============================================================ */
+.faq-section {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+/* Wrapper FAQ: dibatasi max 800px agar mudah dibaca */
+.faq-grid {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Item FAQ: rounded, bisa expand */
+.faq-item {
+    background: var(--bg-light);
+    border-radius: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+/* Header pertanyaan: klik untuk buka/tutup jawaban */
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.faq-question:hover {
+    background: rgba(255, 152, 0, 0.1);
+}
+
+.faq-question h3 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Ikon chevron: berputar 180° saat FAQ terbuka */
+.faq-question i {
+    transition: transform 0.3s;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+/* Jawaban FAQ: tersembunyi (max-height: 0), dibuka dengan JS */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 20px;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
+    padding: 0 20px 20px;
+}
+
+
+/* ============================================================
+   CTA LIGHT (layanan.html): ajakan kontak di bawah halaman
+   Background oranye dengan tombol WhatsApp & telepon
+   ============================================================ */
+.cta-light {
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+    text-align: center;
+    color: white;
+}
+
+.cta-light-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.cta-light-content p {
+    margin-bottom: 25px;
+}
+
+.cta-light-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   RESPONSIVE LAYANAN (Tablet: max-width 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+    /* Statistik layanan: 4 kolom → 2 kolom */
+    .stats-services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Kalkulator: grid → 1 kolom */
+    .calculator-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Peta: 2 kolom → 1 kolom */
+    .maps-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE LAYANAN (Mobile: max-width 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    /* Statistik layanan: 2 kolom → 1 kolom */
+    .stats-services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Peta iframe: tinggi dikurangi */
+    .maps-container iframe {
+        height: 350px;
+    }
+
+    /* Tombol peta: susun vertikal */
+    .cta-light-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+/* ============================================================
+   TAMBAHAN CSS - COMMIT 3 (Pio)
+   Tambahkan blok ini di bagian BAWAH file css/style.css
+   (setelah blok CSS layanan dari commit Dita)
+   Berisi semua style untuk halaman riwayat.html
+   ============================================================ */
+
+
+/* ============================================================
+   RIWAYAT SECTION: area utama halaman riwayat penjemputan
+   Latar belakang abu-abu, min-height memenuhi layar
+   ============================================================ */
+.riwayat-section {
+    padding: 80px 0 60px;
+    background: var(--bg-light);
+    min-height: 100vh; /* pastikan halaman tidak pendek */
+}
+
+
+/* ============================================================
+   TABLE CONTAINER: wrapper tabel dengan scroll horizontal
+   Penting agar tabel tidak overflow di layar kecil
+   ============================================================ */
+.table-container {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    overflow-x: auto; /* scroll kanan-kiri jika tabel terlalu lebar */
+}
+
+
+/* ============================================================
+   DATA TABLE: tabel data penjemputan sampah
+   8 kolom: ID, Tanggal, Nama, Kecamatan, Jenis, Berat, Status, Aksi
+   ============================================================ */
+.data-table {
+    width: 100%;
+    border-collapse: collapse; /* hilangkan jarak antar border sel */
+}
+
+/* Header dan isi tabel: padding, border bawah */
+.data-table th,
+.data-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Header tabel: background hijau, teks putih */
+.data-table th {
+    background: var(--primary-green);
+    color: white;
+    font-weight: 600;
+}
+
+/* Baris hover: berubah abu-abu muda */
+.data-table tr:hover {
+    background: var(--bg-light);
+}
+
+
+/* ============================================================
+   STATUS BADGE: label berwarna untuk status pesanan
+   Tiga kondisi: Menunggu (oranye), Diproses (biru), Selesai (hijau)
+   ============================================================ */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 50px; /* pill shape */
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Status Menunggu: background oranye muda */
+.status-pending {
+    background: #FFF3E0;
+    color: var(--primary-orange);
+}
+
+/* Status Diproses: background biru muda */
+.status-proses {
+    background: #E3F2FD;
+    color: #1976D2;
+}
+
+/* Status Selesai: background hijau muda */
+.status-selesai {
+    background: #E8F5E9;
+    color: var(--primary-green);
+}
+
+
+/* ============================================================
+   ACTION BUTTONS: tombol Edit (✏️) dan Hapus (🗑️) di tiap baris
+   ============================================================ */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+/* Tombol edit: hijau */
+.action-btn.edit {
+    color: var(--primary-green);
+}
+
+.action-btn.edit:hover {
+    background: rgba(46, 125, 50, 0.1);
+}
+
+/* Tombol hapus: merah */
+.action-btn.delete {
+    color: #f44336;
+}
+
+.action-btn.delete:hover {
+    background: rgba(244, 67, 54, 0.1);
+}
+
+
+/* ============================================================
+   FILTER SECTION: pencarian + dropdown filter status
+   Di atas tabel untuk memudahkan mencari data
+   ============================================================ */
+.filter-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* pindah baris di layar kecil */
+}
+
+/* Kolom pencarian: panjang flexible */
+.filter-search {
+    flex: 1;
+    position: relative;
+}
+
+/* Input pencarian dengan ikon kaca pembesar di kiri */
+.filter-search input {
+    width: 100%;
+    padding: 12px 20px;
+    padding-left: 45px; /* ruang untuk ikon */
+    border: 2px solid var(--gray-200);
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+
+.filter-search input:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+/* Ikon kaca pembesar: di dalam input, posisi absolut */
+.filter-search i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+/* Dropdown filter status */
+.filter-select {
+    padding: 12px 20px;
+    border: 2px solid var(--gray-200);
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    background: var(--white);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+
+/* ============================================================
+   EMPTY STATE: tampilan saat tabel kosong (belum ada data)
+   Ditampilkan oleh JavaScript saat array pickupData kosong
+   ============================================================ */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+/* Ikon daur ulang besar abu-abu */
+.empty-state i {
+    font-size: 4rem;
+    color: var(--gray-200);
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+
+/* ============================================================
+   RESPONSIVE RIWAYAT (Mobile: max-width 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    /* Filter: susun vertikal */
+    .filter-section {
+        flex-direction: column;
+    }
+
+    /* Statistik riwayat: 3 kolom → 1 kolom */
+    .stats-services-grid-riwayat {
+        grid-template-columns: 1fr;
+    }
+
+    /* Padding tabel lebih kecil di mobile */
+    .data-table th,
+    .data-table td {
+        padding: 10px 8px;
+        font-size: 0.8rem;
+    }
+}
+/* ============================================================
+   TAMBAHAN CSS - COMMIT 5 (Pio)
+   Tambahkan blok ini di bagian BAWAH file css/style.css
+   (setelah blok CSS riwayat dari commit 3)
+   Berisi semua style untuk halaman edukasi.html
+   ============================================================ */
+
+
+/* ============================================================
+   EDUKASI SECTION: wrapper utama konten halaman edukasi
+   Padding atas besar karena header fixed menghalangi konten
+   ============================================================ */
+.edukasi-section {
+    padding: 120px 0 60px;
+    background: var(--bg-light);
+}
+
+
+/* ============================================================
+   VIDEO GRID: grid 3 kartu video tutorial daur ulang
+   auto-fit agar otomatis pindah baris di layar kecil
+   ============================================================ */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+/* Kartu video: putih, rounded, hover naik */
+.video-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.video-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Thumbnail area: background hitam agar video terlihat kontras */
+.video-thumbnail {
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+/* Video: tinggi tetap, object-fit cover agar tidak distorsi */
+.video-thumbnail video {
+    width: 100%;
+    height: 220px;
+    display: block;
+    background: #000;
+    object-fit: cover;
+}
+
+/* Pastikan tombol fullscreen browser native tetap muncul */
+.video-thumbnail video::-webkit-media-controls-fullscreen-button {
+    display: block !important;
+}
+
+.video-thumbnail video::-webkit-media-controls-enclosure {
+    overflow: visible !important;
+}
+
+
+/* ============================================================
+   TOMBOL PICTURE-IN-PICTURE (PiP)
+   Posisi: pojok kanan bawah thumbnail, sedikit ke kiri dari fullscreen
+   Dikontrol oleh togglePip() di script.js
+   ============================================================ */
+.btn-pip {
+    position: absolute;
+    bottom: 15px;
+    right: 65px; /* sedikit ke kiri dari tombol fullscreen */
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-pip:hover {
+    background: var(--primary-orange);
+    transform: scale(1.1);
+}
+
+
+/* ============================================================
+   TOMBOL FULLSCREEN
+   Posisi: pojok kanan bawah thumbnail
+   Dikontrol oleh toggleFullscreen() di script.js
+   ============================================================ */
+.btn-fs {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-fs:hover {
+    background: var(--primary-orange);
+    transform: scale(1.1);
+}
+
+
+/* ============================================================
+   INFO VIDEO: judul dan deskripsi di bawah thumbnail
+   ============================================================ */
+.video-info {
+    padding: 18px 22px 22px;
+}
+
+.video-info h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-dark);
+}
+
+.video-info p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   ARTIKEL GRID: 3 kartu artikel edukasi
+   ============================================================ */
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 10px;
+}
+
+/* Kartu artikel: putih, hover naik */
+.article-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Konten artikel: padding di dalam kartu */
+.article-content {
+    padding: 25px 28px;
+}
+
+/* Tag kategori artikel: pill oranye kecil */
+.article-category {
+    display: inline-block;
+    background: rgba(255, 152, 0, 0.1);
+    color: var(--primary-orange);
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.article-category i {
+    margin-right: 6px;
+}
+
+.article-content h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    color: var(--text-dark);
+}
+
+.article-content p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+    line-height: 1.6;
+}
+
+/* Link "Baca Selengkapnya →": bergerak saat hover */
+.article-read-more {
+    color: var(--primary-orange);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.article-read-more:hover {
+    color: var(--primary-green);
+    gap: 14px;
+}
+
+.article-read-more i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.article-read-more:hover i {
+    transform: translateX(4px);
+}
+
+
+/* ============================================================
+   TIPS SECTION: 4 kartu tips memilah sampah
+   Background hijau gradient (dark section)
+   ============================================================ */
+.tips-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+    color: white;
+}
+
+/* Grid 4 kolom untuk tips */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Kartu tip: transparan dengan blur */
+.tip-card {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.tip-card i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.tip-card h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.tip-card p {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+
+/* ============================================================
+   VIDEO MODAL: popup untuk memutar video full-size
+   Digunakan di edukasi jika ada tombol play di luar video tag
+   ============================================================ */
+.video-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tampilkan modal dengan class 'active' */
+.video-modal.active {
+    display: flex;
+}
+
+.video-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+}
+
+.video-modal-content video {
+    width: 100%;
+    border-radius: 20px;
+}
+
+/* Tombol tutup modal: X di sudut kanan atas */
+.close-video-modal {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-video-modal:hover {
+    color: var(--primary-orange);
+}
+
+
+/* ============================================================
+   RESPONSIVE EDUKASI (Tablet: max-width 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+    /* Tips: 4 kolom → 2 kolom */
+    .tips-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE EDUKASI (Mobile: max-width 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    /* Video grid: otomatis 1 kolom */
+    .video-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Artikel grid: otomatis 1 kolom */
+    .articles-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Video lebih pendek di mobile */
+    .video-thumbnail video {
+        height: 200px;
+    }
+
+    .video-info {
+        padding: 15px 18px 18px;
+    }
+
+    .video-info h3 {
+        font-size: 0.95rem;
+    }
+
+    .article-content {
+        padding: 20px;
+    }
+
+    .article-content h3 {
+        font-size: 1rem;
+    }
+
+    /* Tips: 2 kolom → 1 kolom */
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE EDUKASI (HP kecil: max-width 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+    .video-thumbnail video {
+        height: 180px;
+    }
+}

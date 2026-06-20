@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <!-- Meta viewport agar tampilan responsif di HP dan tablet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat - Waste2Worth Medan</title>
+
+    <!-- Google Fonts: Poppins untuk tipografi utama -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome: library ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS: animasi scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- CSS utama website -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ============================================================
+         HEADER: sama di semua halaman (fixed, konsisten)
+         ============================================================ -->
+    <header class="header" id="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+                <span>Waste2<span class="highlight">Worth</span></span>
+            </div>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="layanan.html">Layanan</a></li>
+                    <!-- class="active" untuk menandai halaman ini aktif -->
+                    <li><a href="riwayat.html" class="active">Riwayat</a></li>
+                    <li><a href="edukasi.html">Edukasi</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn-login" onclick="openModal('login')">Masuk</a>
+                <a href="#" class="btn-register" onclick="openModal('register')">Daftar</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal Login/Register -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-tabs">
+                <button class="tab-auth active" onclick="switchAuthTab('login')">Masuk</button>
+                <button class="tab-auth" onclick="switchAuthTab('register')">Daftar</button>
+            </div>
+            <form id="loginForm" class="auth-form active">
+                <h3>Selamat Datang Kembali</h3>
+                <p>Silakan masuk ke akun Anda</p>
+                <div class="form-group"><label>Email</label><input type="email" placeholder="nama@email.com" required></div>
+                <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••" required></div>
+                <button type="submit" class="btn-auth">Masuk</button>
+            </form>
+            <form id="registerForm" class="auth-form">
+                <h3>Buat Akun Baru</h3>
+                <p>Bergabung dengan ribuan pengguna di Medan</p>
+                <div class="form-group"><label>Nama Lengkap</label><input type="text" placeholder="Nama Anda" required></div>
+                <div class="form-group"><label>Email</label><input type="email" placeholder="nama@email.com" required></div>
+                <div class="form-group"><label>Nomor HP</label><input type="tel" placeholder="0812-3456-7890" required></div>
+                <div class="form-group"><label>Password</label><input type="password" placeholder="Minimal 8 karakter" required></div>
+                <button type="submit" class="btn-auth">Daftar</button>
+            </form>
+        </div>
+    </div>
+
+    <main>
+        <!-- ============================================================
+             HERO RIWAYAT: judul halaman dengan gelombang dekoratif
+             ============================================================ -->
+        <section class="hero" style="padding: 100px 0 0;">
+            <div class="container">
+                <div class="hero-content" data-aos="fade-up">
+                    <span class="hero-subtitle">#TrackRecord</span>
+                    <h1>Riwayat <span class="highlight">Penjemputan</span></h1>
+                    <p>Lihat dan kelola semua pesanan penjemputan sampah Anda</p>
+                </div>
+                <div class="hero-wave">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M0,0L46.2,16C92.3,32,184.6,64,276.9,74.7C369.2,85,461.5,75,553.8,58.7C646.2,43,738.5,21,830.8,26.7C923.1,32,1015.4,64,1107.7,74.7C1200,85,1200,85,1200,85L1200,120L1107.7,120C1015.4,120,923.1,120,830.8,120C738.5,120,646.2,120,553.8,120C461.5,120,369.2,120,276.9,120C184.6,120,92.3,120,46.2,120L0,120Z" class="wave-fill"></path>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             COMING SOON: placeholder sementara sebelum fitur JS selesai
+             Akan diganti dengan tabel data dan statistik di commit berikutnya
+             ============================================================ -->
+        <section style="padding: 100px 20px; text-align: center; background: var(--bg-light); min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+            <div data-aos="zoom-in">
+                <!-- Ikon loading / konstruksi -->
+                <i class="fas fa-tools" style="font-size: 5rem; color: var(--primary-orange); margin-bottom: 30px; display: block;"></i>
+                <h2 style="font-size: 2rem; margin-bottom: 15px; color: var(--text-dark);">Fitur Sedang Disiapkan</h2>
+                <p style="color: var(--text-light); font-size: 1rem; max-width: 500px; margin: 0 auto 30px;">
+                    Halaman riwayat penjemputan sedang dalam pengembangan. Segera hadir dengan fitur tabel data, filter, dan manajemen pesanan lengkap.
+                </p>
+                <a href="layanan.html" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Layanan
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============================================================
+         FOOTER: sama di semua halaman
+         ============================================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo"><i class="fas fa-recycle"></i><span>Waste2Worth</span></div>
+                    <p>Platform bank sampah digital pertama di Medan.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="layanan.html">Layanan</a></li>
+                        <li><a href="riwayat.html">Riwayat</a></li>
+                        <li><a href="edukasi.html">Edukasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kantor Medan</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Gajah Mada No. 123, Medan Barat</li>
+                        <li><i class="fas fa-phone-alt"></i> (061) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> info@waste2worth-medan.id</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Waste2Worth Medan. All Rights Reserved.</p></div>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
