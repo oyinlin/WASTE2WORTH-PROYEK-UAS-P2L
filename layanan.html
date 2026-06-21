@@ -380,6 +380,166 @@
         </section>
 
         <!-- ============================================================
+             FORM PENJEMPUTAN SAMPAH
+             Akan disambungkan ke JavaScript di commit 7 (Dita) dan 8 (Olin)
+             id="pickupForm": event listener submit ditambahkan di script.js
+             ============================================================ -->
+        <section class="pickup-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Jemput Sampah</span>
+                    <h2>Form <span class="highlight">Penjemputan</span></h2>
+                    <p>Isi form berikut untuk memesan jemput sampah langsung ke rumah Anda</p>
+                </div>
+
+                <div class="pickup-wrapper" data-aos="zoom-in" data-aos-delay="100">
+                    <!-- id="pickupForm": submit handler ditangkap oleh handlePickupSubmit() di script.js -->
+                    <form class="pickup-form" id="pickupForm">
+
+                        <!-- Baris 1: Nama + No HP -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Nama Lengkap <span class="highlight">*</span></label>
+                                <!-- id="pickupNama": diambil nilainya oleh handlePickupSubmit() -->
+                                <input type="text" id="pickupNama" placeholder="Nama Anda" required class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-phone"></i> Nomor HP <span class="highlight">*</span></label>
+                                <!-- id="pickupPhone": divalidasi format 10-13 digit -->
+                                <input type="tel" id="pickupPhone" placeholder="0812-3456-7890" required class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Baris 2: Alamat lengkap (textarea) -->
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Alamat Lengkap <span class="highlight">*</span></label>
+                            <!-- id="pickupAlamat": minimal 10 karakter (divalidasi JS) -->
+                            <textarea id="pickupAlamat" rows="3" placeholder="Jl. Gajah Mada No.123, Medan Barat" required class="form-control"></textarea>
+                        </div>
+
+                        <!-- Baris 3: Kecamatan + Jenis Sampah (multiple select) -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-city"></i> Kecamatan <span class="highlight">*</span></label>
+                                <!-- id="pickupKecamatan": disimpan ke localStorage sebagai nama kecamatan -->
+                                <select id="pickupKecamatan" required class="form-control">
+                                    <option value="">Pilih Kecamatan</option>
+                                    <option>Medan Barat</option>
+                                    <option>Medan Timur</option>
+                                    <option>Medan Sunggal</option>
+                                    <option>Medan Helvetia</option>
+                                    <option>Medan Tembung</option>
+                                    <option>Medan Perjuangan</option>
+                                    <option>Medan Area</option>
+                                    <option>Medan Kota</option>
+                                    <option>Medan Marelan</option>
+                                    <option>Medan Labuhan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-trash-alt"></i> Jenis Sampah <span class="highlight">*</span></label>
+                                <!-- multiple: bisa pilih lebih dari 1 dengan Ctrl/Cmd -->
+                                <!-- id="pickupJenisSampah": dibaca getSelectedJenisSampah() → array -->
+                                <select id="pickupJenisSampah" multiple class="form-control">
+                                    <option>Botol Plastik PET</option>
+                                    <option>Kardus / Kertas</option>
+                                    <option>Kaleng Aluminium</option>
+                                    <option>Kaca Botol</option>
+                                    <option>Besi Tua</option>
+                                    <option>Elektronik Rusak</option>
+                                </select>
+                                <small class="form-hint">*Tekan Ctrl (Windows) atau Cmd (Mac) untuk pilih lebih dari satu</small>
+                            </div>
+                        </div>
+
+                        <!-- Baris 4: Berat + Tanggal + Jam Jemput -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-weight-hanging"></i> Perkiraan Berat (Kg) <span class="highlight">*</span></label>
+                                <!-- min="5": validasi HTML minimal 5kg, JS juga memvalidasi -->
+                                <input type="number" id="pickupBerat" min="5" step="0.5" placeholder="Minimal 5 kg" required class="form-control">
+                                <small class="form-hint">*Minimal 5 kg untuk penjemputan gratis</small>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar"></i> Tanggal Jemput <span class="highlight">*</span></label>
+                                <!-- JS memvalidasi tanggal harus >= hari ini -->
+                                <input type="date" id="pickupTanggal" required class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-clock"></i> Jam Jemput <span class="highlight">*</span></label>
+                                <select id="pickupWaktu" required class="form-control">
+                                    <option value="">Pilih Waktu</option>
+                                    <option>08:00 - 10:00</option>
+                                    <option>10:00 - 12:00</option>
+                                    <option>13:00 - 15:00</option>
+                                    <option>15:00 - 17:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Baris 5: Catatan tambahan (opsional) -->
+                        <div class="form-group">
+                            <label><i class="fas fa-note-sticky"></i> Catatan Tambahan</label>
+                            <!-- Opsional: tidak ada required, tidak divalidasi JS -->
+                            <textarea id="pickupCatatan" rows="2" placeholder="Contoh: Rumah warna hijau, dekat masjid" class="form-control"></textarea>
+                        </div>
+
+                        <!-- Tombol submit: ditangkap oleh event listener di script.js -->
+                        <button type="submit" class="btn btn-primary btn-block btn-submit">
+                            <i class="fas fa-paper-plane"></i> KIRIM PESANAN
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             FAQ (Frequently Asked Questions): accordion buka-tutup
+             Fungsi toggleFaq() di script.js mengatur buka/tutup jawaban
+             ============================================================ -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">FAQ</span>
+                    <h2>Pertanyaan <span class="highlight">Umum</span></h2>
+                </div>
+                <div class="faq-grid">
+                    <!-- onclick="toggleFaq(this)" → 'this' = elemen .faq-question yang diklik -->
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>📦 Apakah penjemputan sampah gratis?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <!-- Jawaban: tersembunyi (max-height:0), dibuka JS -->
+                        <div class="faq-answer">Ya, penjemputan sampah GRATIS untuk minimal 5 kg sampah daur ulang.</div>
+                    </div>
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>💰 Berapa lama pencairan dana?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">Dana akan ditransfer maksimal 1x24 jam setelah sampah ditimbang.</div>
+                    </div>
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>🗺️ Bagaimana cara menjadi mitra bank sampah?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">Hubungi kami di nomor 0812-3456-7890 untuk informasi pendaftaran.</div>
+                    </div>
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <h3>📱 Apakah bisa jemput sampah elektronik?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">Bisa. Minimal 5 kg untuk sampah elektronik.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
              CTA (Call-to-Action): kontak customer service
              ============================================================ -->
         <section class="cta-light">
