@@ -400,3 +400,87 @@ function handlePickupSubmit(event) {
 
     return false;
 }
+
+/* ============================================================
+   FUNGSI FAQ: accordion buka/tutup
+   Dipanggil oleh onclick="toggleFaq(this)" di setiap .faq-question
+   Parameter: element = elemen .faq-question yang diklik
+   ============================================================ */
+function toggleFaq(element) {
+    // Naik ke parent .faq-item
+    const faqItem = element.parentElement;
+    const answer  = faqItem.querySelector('.faq-answer');
+    const icon    = element.querySelector('i');
+
+    // Toggle class 'active' pada .faq-item
+    faqItem.classList.toggle('active');
+
+    if (faqItem.classList.contains('active')) {
+        // Buka jawaban: set max-height ke tinggi konten sesungguhnya (untuk animasi CSS)
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        if (icon) icon.style.transform = 'rotate(180deg)'; // putar chevron
+    } else {
+        // Tutup jawaban
+        answer.style.maxHeight = '0';
+        if (icon) icon.style.transform = 'rotate(0deg)';
+    }
+}
+
+
+/* ============================================================
+   INISIALISASI: dijalankan saat DOM selesai dimuat
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Inisialisasi AOS (Animate On Scroll)
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800, // durasi animasi 800ms
+            once: true,    // animasi hanya sekali (tidak berulang saat scroll balik)
+            offset: 50     // trigger 50px sebelum elemen masuk viewport
+        });
+    }
+
+    // Jalankan inisialisasi komponen UI
+    initHamburger(); // hamburger menu mobile
+    initBackToTop(); // tombol kembali ke atas
+    initCounters();  // animasi counter angka di hero
+
+    // Handler untuk form login (mencegah refresh + tampilkan notifikasi)
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // cegah refresh halaman
+            showNotification('Login berhasil! Selamat datang.', 'success');
+            closeModal();
+        });
+    }
+
+    // Handler untuk form register (mencegah refresh + tampilkan notifikasi)
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // cegah refresh halaman
+            showNotification('Akun berhasil dibuat! Silakan masuk.', 'success');
+            closeModal();
+        });
+    }
+
+    // Pasang handler submit pada form penjemputan (hanya ada di layanan.html)
+    const pickupForm = document.getElementById('pickupForm');
+    if (pickupForm) {
+        pickupForm.addEventListener('submit', handlePickupSubmit);
+    }
+});
+
+
+/* ============================================================
+   EKSPOR FUNGSI KE GLOBAL SCOPE
+   Diperlukan karena fungsi-fungsi ini dipanggil via onclick="" di HTML
+   Tanpa ini, fungsi dalam module/strict mode tidak bisa diakses dari HTML
+   ============================================================ */
+window.hitungNilai   = hitungNilai;
+window.openModal     = openModal;
+window.closeModal    = closeModal;
+window.switchAuthTab = switchAuthTab;
+window.toggleFaq     = toggleFaq;
