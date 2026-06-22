@@ -1,18 +1,51 @@
+<!--
+    ================================================================
+    COMMIT 5 - CSS + KONTEN EDUKASI (Viona)
+    
+    File yang ditambahkan:
+    1. tambahan_css_edukasi.css → paste ke paling bawah css/style.css
+       (setelah CSS riwayat dari commit 3)
+    2. edukasi.html → halaman edukasi LENGKAP (konten penuh)
+    
+    Konten halaman edukasi:
+    - Hero section: "#BelajarBersama - Edukasi Daur Ulang"
+    - 3 kartu video tutorial:
+        • Kelola Sampah Rumah Tangga (video1)
+        • Kelola Sampah Plastik (video2)
+        • Kelola Sampah Kertas (video3)
+      Setiap video punya tombol PiP (picture-in-picture) & fullscreen
+    - 3 kartu artikel edukasi (Tips & Trik, Statistik, Ide Kreatif)
+    - Tips section: 4 langkah memilah sampah (background hijau)
+    - CTA bawah: daftar + cari bank sampah
+    - Video modal popup (#videoModal)
+    
+    Video yang dibutuhkan (masukkan ke folder video/):
+    - kelola sampah rumah tangga.mp4
+    - kelola plastik.mp4
+    - kelola kertas.mp4
+    ================================================================
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <!-- Meta viewport: responsif di semua ukuran layar -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edukasi - Waste2Worth Medan</title>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome: library ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS: animasi scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- CSS utama website -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <!-- ============================================================
-         HEADER: navigasi konsisten di semua halaman
+         HEADER: navigasi tetap di atas semua halaman
          ============================================================ -->
     <header class="header" id="header">
         <div class="nav-container">
@@ -25,6 +58,7 @@
                     <li><a href="index.html">Beranda</a></li>
                     <li><a href="layanan.html">Layanan</a></li>
                     <li><a href="riwayat.html">Riwayat</a></li>
+                    <!-- class="active" menandai halaman edukasi sedang dibuka -->
                     <li><a href="edukasi.html" class="active">Edukasi</a></li>
                 </ul>
             </nav>
@@ -38,7 +72,9 @@
         </div>
     </header>
 
-    <!-- Modal Login/Register -->
+    <!-- ============================================================
+         MODAL LOGIN / REGISTER
+         ============================================================ -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -66,7 +102,9 @@
     </div>
 
     <main>
-        <!-- Hero Edukasi -->
+        <!-- ============================================================
+             HERO EDUKASI: judul + gelombang dekoratif
+             ============================================================ -->
         <section class="hero" style="padding: 100px 0 0;">
             <div class="container">
                 <div class="hero-content" data-aos="fade-up">
@@ -83,24 +121,218 @@
         </section>
 
         <!-- ============================================================
-             COMING SOON: placeholder sementara untuk halaman edukasi
-             Akan diisi video, artikel, dan tips di commit berikutnya
+             SECTION VIDEO TUTORIAL: 3 kartu video dengan PiP & fullscreen
+             Setiap video punya:
+             - tag <video> dengan controls dan poster thumbnail
+             - tombol PiP: togglePip(videoId) → video mengapung
+             - tombol fullscreen: toggleFullscreen(videoId) → layar penuh
              ============================================================ -->
-        <section style="padding: 100px 20px; text-align: center; background: var(--bg-light); min-height: 60vh; display: flex; align-items: center; justify-content: center;">
-            <div data-aos="zoom-in">
-                <i class="fas fa-book-open" style="font-size: 5rem; color: var(--primary-green); margin-bottom: 30px; display: block;"></i>
-                <h2 style="font-size: 2rem; margin-bottom: 15px; color: var(--text-dark);">Konten Sedang Disiapkan</h2>
-                <p style="color: var(--text-light); font-size: 1rem; max-width: 500px; margin: 0 auto 30px;">
-                    Halaman edukasi sedang dalam pengembangan. Segera hadir dengan video tutorial daur ulang, artikel informatif, dan tips memilah sampah.
-                </p>
-                <a href="index.html" class="btn btn-primary">
-                    <i class="fas fa-home"></i> Kembali ke Beranda
-                </a>
+        <section class="edukasi-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Video Tutorial</span>
+                    <h2>Belajar <span class="highlight">Dari Video</span></h2>
+                    <p>Simak video tutorial berikut untuk memahami proses daur ulang</p>
+                </div>
+
+                <div class="video-grid" data-aos="fade-up" data-aos-delay="100">
+
+                    <!-- Video 1: Kelola Sampah Rumah Tangga -->
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <!-- id="video1": dipakai oleh togglePip('video1') dan toggleFullscreen('video1') -->
+                            <video
+                                id="video1"
+                                src="video/kelola sampah rumah tangga.mp4"
+                                controls
+                                poster="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJBngcUzd55aDtmln65LnMNz-guiOp57ew4hkMQNdnCQ&s=10">
+                            </video>
+                            <!-- Tombol PiP: video mengapung di atas konten lain -->
+                            <button class="btn-pip" onclick="togglePip('video1')" title="Picture-in-Picture">
+                                <i class="fas fa-window-restore"></i>
+                            </button>
+                            <!-- Tombol fullscreen: video tampil penuh layar -->
+                            <button class="btn-fs" onclick="toggleFullscreen('video1')" title="Fullscreen">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                        <div class="video-info">
+                            <h3>🏠 Kelola Sampah Rumah Tangga</h3>
+                            <p>Pelajari cara mengelola sampah rumah tangga dengan bijak dan benar</p>
+                        </div>
+                    </div>
+
+                    <!-- Video 2: Kelola Sampah Plastik -->
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <video
+                                id="video2"
+                                src="video/kelola plastik.mp4"
+                                controls
+                                poster="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLHHj37I0hEzn0bx9iifCxkSxJUEdSGVNF-aKLUVXtww&s=10">
+                            </video>
+                            <button class="btn-pip" onclick="togglePip('video2')" title="Picture-in-Picture">
+                                <i class="fas fa-window-restore"></i>
+                            </button>
+                            <button class="btn-fs" onclick="toggleFullscreen('video2')" title="Fullscreen">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                        <div class="video-info">
+                            <h3>♻️ Kelola Sampah Plastik</h3>
+                            <p>Pelajari cara mengelola sampah plastik dengan bijak dan benar</p>
+                        </div>
+                    </div>
+
+                    <!-- Video 3: Kelola Sampah Kertas -->
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <video
+                                id="video3"
+                                src="video/kelola kertas.mp4"
+                                controls
+                                poster="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBUk3WZWar_vBev_f_7iJA9-BUyu0vB2q4t_mNbj2qVA&s=10">
+                            </video>
+                            <button class="btn-pip" onclick="togglePip('video3')" title="Picture-in-Picture">
+                                <i class="fas fa-window-restore"></i>
+                            </button>
+                            <button class="btn-fs" onclick="toggleFullscreen('video3')" title="Fullscreen">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                        <div class="video-info">
+                            <h3>📄 Kelola Sampah Kertas</h3>
+                            <p>Pelajari cara mengelola sampah kertas dengan bijak dan benar</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ============================================================
+                     ARTIKEL EDUKASI: 3 kartu artikel informatif
+                     ============================================================ -->
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">Artikel</span>
+                    <h2>Baca <span class="highlight">Artikel</span></h2>
+                    <p>Informasi lengkap tentang pengelolaan sampah</p>
+                </div>
+
+                <div class="articles-grid" data-aos="fade-up" data-aos-delay="100">
+
+                    <!-- Artikel 1: Tips plastik -->
+                    <div class="article-card">
+                        <div class="article-content">
+                            <!-- Tag kategori artikel: warna oranye, pill shape -->
+                            <span class="article-category">
+                                <i class="fas fa-leaf"></i> Tips &amp; Trik
+                            </span>
+                            <h3>10 Cara Mudah Mengurangi Sampah Plastik di Rumah</h3>
+                            <p>Mulai dari membawa tas belanja sendiri hingga menghindari sedotan plastik, semua bisa dimulai dari hal kecil.</p>
+                            <a href="#" class="article-read-more">
+                                Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Artikel 2: Statistik bank sampah -->
+                    <div class="article-card">
+                        <div class="article-content">
+                            <span class="article-category">
+                                <i class="fas fa-chart-line"></i> Statistik
+                            </span>
+                            <h3>Dampak Positif Bank Sampah bagi Lingkungan Medan</h3>
+                            <p>Dalam 2 tahun, bank sampah berhasil mengurangi 8.567 ton sampah yang masuk ke TPA.</p>
+                            <a href="#" class="article-read-more">
+                                Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Artikel 3: Kerajinan daur ulang -->
+                    <div class="article-card">
+                        <div class="article-content">
+                            <span class="article-category">
+                                <i class="fas fa-lightbulb"></i> Ide Kreatif
+                            </span>
+                            <h3>Kerajinan Tangan dari Sampah yang Bisa Dijual</h3>
+                            <p>Inspirasi bisnis daur ulang yang menguntungkan dan ramah lingkungan.</p>
+                            <a href="#" class="article-read-more">
+                                Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             TIPS SECTION: 4 langkah memilah sampah
+             Background hijau gelap (dark section)
+             ============================================================ -->
+        <section class="tips-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <!-- style inline untuk override warna teks di background hijau -->
+                    <span class="section-tag" style="background: rgba(255,255,255,0.2); color: white;">Tips &amp; Trik</span>
+                    <h2 style="color: white;">
+                        5 Langkah <span style="color: var(--primary-orange);">Memilah Sampah</span>
+                    </h2>
+                    <p style="color: rgba(255,255,255,0.9);">Ikuti langkah sederhana ini untuk mulai memilah sampah</p>
+                </div>
+
+                <!-- Grid 4 kartu tips: masing-masing punya ikon, judul, deskripsi -->
+                <div class="tips-grid">
+                    <div class="tip-card" data-aos="zoom-in" data-aos-delay="100">
+                        <i class="fas fa-trash-alt"></i>
+                        <h4>1. Pisahkan Organik</h4>
+                        <p>Sisa makanan, daun, dan bahan organik lainnya</p>
+                    </div>
+                    <div class="tip-card" data-aos="zoom-in" data-aos-delay="200">
+                        <i class="fas fa-bottle-water"></i>
+                        <h4>2. Kumpulkan Plastik</h4>
+                        <p>Botol plastik, gelas, dan kemasan plastik</p>
+                    </div>
+                    <div class="tip-card" data-aos="zoom-in" data-aos-delay="300">
+                        <i class="fas fa-newspaper"></i>
+                        <h4>3. Siapkan Kertas</h4>
+                        <p>Kardus, koran, dan kertas bekas</p>
+                    </div>
+                    <div class="tip-card" data-aos="zoom-in" data-aos-delay="400">
+                        <i class="fas fa-battery-full"></i>
+                        <h4>4. B3 Terpisah</h4>
+                        <p>Baterai, elektronik, dan limbah berbahaya</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             CTA: ajakan daftar dan mulai setorkan sampah
+             Background oranye (cta-light)
+             ============================================================ -->
+        <section class="cta-light">
+            <div class="container">
+                <div class="cta-light-content" data-aos="zoom-in">
+                    <h2>Mulai Sekarang Juga!</h2>
+                    <p>Daftar dan mulai setorkan sampah daur ulang Anda ke bank sampah terdekat</p>
+                    <div class="cta-light-buttons">
+                        <!-- openModal('register'): buka modal daftar akun baru -->
+                        <a href="#" class="btn btn-primary" onclick="openModal('register')">
+                            <i class="fas fa-user-plus"></i> Daftar Sekarang
+                        </a>
+                        <a href="layanan.html" class="btn btn-secondary">
+                            <i class="fas fa-map-marked-alt"></i> Cari Bank Sampah
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- ============================================================
+         FOOTER: informasi kontak dan navigasi
+         ============================================================ -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -135,8 +367,25 @@
         </div>
     </footer>
 
+    <!-- ============================================================
+         VIDEO MODAL: popup untuk memutar video dalam ukuran besar
+         id="videoModal": dikontrol playVideo() dan closeVideoModal()
+         id="closeVideoModal": event listener 'click' dipasang di DOMContentLoaded
+         ============================================================ -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <span class="close-video-modal" id="closeVideoModal">&times;</span>
+            <video id="videoPlayer" controls>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- Tombol kembali ke atas -->
     <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Script utama: semua fungsi interaktivitas -->
     <script src="js/script.js"></script>
 </body>
 </html>
