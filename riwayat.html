@@ -1,14 +1,35 @@
+<!--
+    ================================================================
+    COMMIT 3 - CSS + KONTEN RIWAYAT (Pio)
+    
+    File yang ditambahkan:
+    1. tambahan_css_riwayat.css → paste ke paling bawah css/style.css
+       (setelah CSS layanan dari commit 2)
+    2. riwayat.html → halaman riwayat LENGKAP (konten penuh)
+    
+    Konten halaman riwayat:
+    - Hero section + statistik 3 kartu (total pengiriman, berat, estimasi)
+    - Filter pencarian nama/ID + dropdown filter status
+    - Tabel data penjemputan (8 kolom: ID, tanggal, nama, kecamatan,
+      jenis sampah, berat, status, aksi)
+    - Badge status berwarna: Menunggu (oranye), Diproses (biru), Selesai (hijau)
+    - Tombol Edit (✏️) dan Hapus (🗑️) di setiap baris
+    - Modal edit pesanan (isi data otomatis dari JS)
+    - Empty state (muncul saat tabel kosong)
+    - CTA bawah: tombol buat pesanan baru
+    ================================================================
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta viewport agar tampilan responsif di HP dan tablet -->
+    <!-- Meta viewport: responsif di semua ukuran layar -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat - Waste2Worth Medan</title>
 
-    <!-- Google Fonts: Poppins untuk tipografi utama -->
+    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome: library ikon -->
+    <!-- Font Awesome: ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- AOS: animasi scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -18,7 +39,7 @@
 <body>
 
     <!-- ============================================================
-         HEADER: sama di semua halaman (fixed, konsisten)
+         HEADER: navigasi tetap di atas halaman
          ============================================================ -->
     <header class="header" id="header">
         <div class="nav-container">
@@ -30,7 +51,7 @@
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="index.html">Beranda</a></li>
                     <li><a href="layanan.html">Layanan</a></li>
-                    <!-- class="active" untuk menandai halaman ini aktif -->
+                    <!-- class="active": menandai halaman riwayat sedang aktif -->
                     <li><a href="riwayat.html" class="active">Riwayat</a></li>
                     <li><a href="edukasi.html">Edukasi</a></li>
                 </ul>
@@ -45,7 +66,9 @@
         </div>
     </header>
 
-    <!-- Modal Login/Register -->
+    <!-- ============================================================
+         MODAL LOGIN / REGISTER
+         ============================================================ -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -72,6 +95,121 @@
         </div>
     </div>
 
+    <!-- ============================================================
+         MODAL EDIT PESANAN
+         Muncul saat tombol ✏️ diklik pada baris tabel
+         Diisi data otomatis oleh editPickup(id) dari script.js
+         ============================================================ -->
+    <div class="modal" id="editModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <!-- Tombol tutup modal edit -->
+            <span class="close-modal" onclick="closeEditModal()">&times;</span>
+            <h3 style="margin-bottom: 5px;"><i class="fas fa-edit"></i> Edit Pesanan</h3>
+            <p style="color: var(--text-light); font-size: 0.85rem; margin-bottom: 20px;">Perbarui informasi penjemputan sampah</p>
+
+            <!-- Baris edit: Nama + No HP -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <!-- id="editNama": diisi editPickup(), dibaca saveEditPickup() -->
+                    <input type="text" id="editNama" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Nomor HP</label>
+                    <input type="tel" id="editPhone" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Field edit: Alamat -->
+            <div class="form-group">
+                <label>Alamat Lengkap</label>
+                <textarea id="editAlamat" rows="2" class="form-control" required></textarea>
+            </div>
+
+            <!-- Baris edit: Kecamatan + Jenis Sampah -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Kecamatan</label>
+                    <!-- id="editKecamatan": pilihan dicocokkan teks dengan data lama -->
+                    <select id="editKecamatan" class="form-control">
+                        <option>Medan Barat</option>
+                        <option>Medan Timur</option>
+                        <option>Medan Sunggal</option>
+                        <option>Medan Helvetia</option>
+                        <option>Medan Tembung</option>
+                        <option>Medan Perjuangan</option>
+                        <option>Medan Area</option>
+                        <option>Medan Kota</option>
+                        <option>Medan Marelan</option>
+                        <option>Medan Labuhan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Jenis Sampah</label>
+                    <!-- multiple: bisa pilih lebih dari satu, diisi editPickup() -->
+                    <select id="editJenisSampah" multiple class="form-control">
+                        <option>Botol Plastik PET</option>
+                        <option>Kardus / Kertas</option>
+                        <option>Kaleng Aluminium</option>
+                        <option>Kaca Botol</option>
+                        <option>Besi Tua</option>
+                        <option>Elektronik Rusak</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Baris edit: Berat + Tanggal + Waktu -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Berat (Kg)</label>
+                    <input type="number" id="editBerat" min="1" step="0.5" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Jemput</label>
+                    <input type="date" id="editTanggal" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Jam Jemput</label>
+                    <select id="editWaktu" class="form-control">
+                        <option>08:00 - 10:00</option>
+                        <option>10:00 - 12:00</option>
+                        <option>13:00 - 15:00</option>
+                        <option>15:00 - 17:00</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Field edit: Status pesanan (bisa diubah admin/user) -->
+            <div class="form-group">
+                <label>Status Pesanan</label>
+                <!-- id="editStatus": dropdown status (pending/proses/selesai) -->
+                <select id="editStatus" class="form-control">
+                    <option value="pending">⏳ Menunggu</option>
+                    <option value="proses">🔄 Diproses</option>
+                    <option value="selesai">✅ Selesai</option>
+                </select>
+            </div>
+
+            <!-- Field edit: Catatan tambahan -->
+            <div class="form-group">
+                <label>Catatan</label>
+                <textarea id="editCatatan" rows="2" class="form-control"></textarea>
+            </div>
+
+            <!-- Tombol aksi modal edit -->
+            <div style="display: flex; gap: 15px; margin-top: 10px;">
+                <!-- Simpan perubahan: memanggil saveEditPickup() di script.js -->
+                <button onclick="saveEditPickup()" class="btn btn-primary" style="flex: 1; justify-content: center;">
+                    <i class="fas fa-save"></i> Simpan Perubahan
+                </button>
+                <!-- Batal: tutup modal tanpa menyimpan -->
+                <button onclick="closeEditModal()" class="btn" style="flex: 1; justify-content: center; background: var(--gray-200); color: var(--text-dark);">
+                    <i class="fas fa-times"></i> Batal
+                </button>
+            </div>
+        </div>
+    </div>
+
     <main>
         <!-- ============================================================
              HERO RIWAYAT: judul halaman dengan gelombang dekoratif
@@ -92,26 +230,124 @@
         </section>
 
         <!-- ============================================================
-             COMING SOON: placeholder sementara sebelum fitur JS selesai
-             Akan diganti dengan tabel data dan statistik di commit berikutnya
+             STATISTIK RIWAYAT: 3 kartu (total pengiriman, berat, estimasi)
+             ID elemen diisi otomatis oleh updateStatistics() di script.js
+             setiap kali displayPickupData() dipanggil
              ============================================================ -->
-        <section style="padding: 100px 20px; text-align: center; background: var(--bg-light); min-height: 60vh; display: flex; align-items: center; justify-content: center;">
-            <div data-aos="zoom-in">
-                <!-- Ikon loading / konstruksi -->
-                <i class="fas fa-tools" style="font-size: 5rem; color: var(--primary-orange); margin-bottom: 30px; display: block;"></i>
-                <h2 style="font-size: 2rem; margin-bottom: 15px; color: var(--text-dark);">Fitur Sedang Disiapkan</h2>
-                <p style="color: var(--text-light); font-size: 1rem; max-width: 500px; margin: 0 auto 30px;">
-                    Halaman riwayat penjemputan sedang dalam pengembangan. Segera hadir dengan fitur tabel data, filter, dan manajemen pesanan lengkap.
-                </p>
-                <a href="layanan.html" class="btn btn-primary">
-                    <i class="fas fa-arrow-left"></i> Kembali ke Layanan
-                </a>
+        <section class="stats-services">
+            <div class="container">
+                <!-- stats-services-grid-riwayat: 3 kolom (bukan 4 seperti di layanan) -->
+                <div class="stats-services-grid-riwayat">
+                    <!-- id="totalPengiriman": diisi pickupData.length -->
+                    <div class="stat-service-card" data-aos="zoom-in" data-aos-delay="100">
+                        <i class="fas fa-truck"></i>
+                        <span class="stat-number" id="totalPengiriman">0</span>
+                        <span class="stat-label">Total Pengiriman</span>
+                    </div>
+                    <!-- id="totalBerat": diisi sum semua item.berat -->
+                    <div class="stat-service-card" data-aos="zoom-in" data-aos-delay="200">
+                        <i class="fas fa-weight-hanging"></i>
+                        <span class="stat-number" id="totalBerat">0</span>
+                        <span class="stat-label">Total Berat (Kg)</span>
+                    </div>
+                    <!-- id="totalEstimasi": diisi sum(berat × 5000) -->
+                    <div class="stat-service-card" data-aos="zoom-in" data-aos-delay="300">
+                        <i class="fas fa-coins"></i>
+                        <span class="stat-number" id="totalEstimasi">Rp 0</span>
+                        <span class="stat-label">Estimasi Pendapatan</span>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <!-- ============================================================
+             SECTION TABEL DATA: filter + tabel penjemputan
+             ============================================================ -->
+        <section class="riwayat-section">
+            <div class="container">
+
+                <!-- ===================================================
+                     FILTER: pencarian nama/ID + dropdown status
+                     Event listener 'input'/'change' di script.js
+                     otomatis memfilter tabel saat user mengetik/memilih
+                     =================================================== -->
+                <div class="filter-section" data-aos="fade-up">
+                    <!-- Input pencarian: filter berdasarkan nama atau ID pesanan -->
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <!-- id="searchInput": event listener 'input' di DOMContentLoaded -->
+                        <input type="text" id="searchInput" placeholder="Cari nama atau ID pesanan...">
+                    </div>
+
+                    <!-- Dropdown filter status pesanan -->
+                    <!-- id="statusFilter": event listener 'change' di DOMContentLoaded -->
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">Semua Status</option>
+                        <option value="pending">⏳ Menunggu</option>
+                        <option value="proses">🔄 Diproses</option>
+                        <option value="selesai">✅ Selesai</option>
+                    </select>
+
+                    <!-- Tombol tambah pesanan: mengarah ke form di layanan.html -->
+                    <a href="layanan.html#pickupForm" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Tambah Pesanan
+                    </a>
+                </div>
+
+                <!-- ===================================================
+                     TABEL DATA PENJEMPUTAN
+                     tbody#tableBody: diisi oleh displayPickupData() di script.js
+                     Setiap baris punya tombol edit dan hapus
+                     =================================================== -->
+                <div class="table-container" data-aos="fade-up" data-aos-delay="100">
+                    <table class="data-table">
+                        <!-- Header tabel: 8 kolom -->
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Nama</th>
+                                <th>Kecamatan</th>
+                                <th>Jenis Sampah</th>
+                                <th>Berat</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <!-- tbody ini dikosongkan dan diisi ulang setiap kali displayPickupData() dipanggil -->
+                        <tbody id="tableBody">
+                            <!-- Data diisi oleh JavaScript (displayPickupData() di script.js) -->
+                            <!-- Jika kosong, ditampilkan empty-state dengan tombol "Buat Pesanan" -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTA: ajakan buat pesanan pertama -->
+        <section class="cta-light" style="padding: 40px 0;">
+            <div class="container">
+                <div class="cta-light-content" data-aos="zoom-in" style="text-align: center;">
+                    <h2>Belum punya pesanan?</h2>
+                    <p>Buat pesanan penjemputan sampah sekarang dan dapatkan manfaatnya!</p>
+                    <div class="cta-light-buttons">
+                        <a href="layanan.html" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Buat Pesanan Baru
+                        </a>
+                        <a href="edukasi.html" class="btn btn-secondary">
+                            <i class="fas fa-book-open"></i> Pelajari Daur Ulang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- ============================================================
-         FOOTER: sama di semua halaman
+         FOOTER: informasi kontak dan navigasi tambahan
+         BUG FIX dari commit 4: typo "FOO ER" sudah diperbaiki jadi "FOOTER"
          ============================================================ -->
     <footer class="footer">
         <div class="container">
@@ -148,7 +384,6 @@
     </footer>
 
     <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/script.js"></script>
 </body>
