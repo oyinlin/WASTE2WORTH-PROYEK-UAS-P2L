@@ -4,12 +4,6 @@
    Deskripsi : File CSS utama yang dipakai semua halaman
    ============================================================ */
 
-
-/* ============================================================
-   RESET CSS
-   Menghapus margin, padding, dan box-sizing default browser
-   agar tampilan konsisten di semua browser
-   ============================================================ */
 * {
     margin: 0;
     padding: 0;
