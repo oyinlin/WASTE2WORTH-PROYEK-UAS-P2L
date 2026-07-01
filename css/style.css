@@ -1267,6 +1267,8 @@ body {
         justify-content: center;
     }
 }
+
+
 /* ============================================================
    TAMBAHAN CSS - COMMIT 2 (Dita)
    Tambahkan blok ini di bagian BAWAH file css/style.css
@@ -1809,6 +1811,8 @@ body {
         align-items: center;
     }
 }
+
+
 /* ============================================================
    TAMBAHAN CSS - COMMIT 3 (Pio)
    Tambahkan blok ini di bagian BAWAH file css/style.css
@@ -2043,6 +2047,8 @@ body {
         font-size: 0.8rem;
     }
 }
+
+
 /* ============================================================
    TAMBAHAN CSS - COMMIT 5 (Pio)
    Tambahkan blok ini di bagian BAWAH file css/style.css
@@ -2429,5 +2435,412 @@ body {
 @media (max-width: 480px) {
     .video-thumbnail video {
         height: 180px;
+    }
+}
+
+
+/* ============================================================
+   PERBAIKAN RESPONSIVE HP (TAMBAHAN)
+   ============================================================ */
+
+/* Perbaikan untuk HP ukuran sangat kecil (max-width: 400px) */
+@media (max-width: 400px) {
+    /* Header lebih kompak */
+    .header .nav-container {
+        padding: 8px 10px;
+    }
+
+    .logo {
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+
+    .logo i {
+        font-size: 1.2rem;
+    }
+
+    .auth-buttons {
+        gap: 6px;
+    }
+
+    .auth-buttons .btn-login,
+    .auth-buttons .btn-register {
+        padding: 4px 10px;
+        font-size: 0.6rem;
+    }
+
+    .hamburger span {
+        width: 18px;
+        height: 2px;
+    }
+
+    /* Hero lebih kecil */
+    .hero {
+        padding: 80px 0 0 !important;
+    }
+
+    .hero-content {
+        padding: 0 10px 30px !important;
+    }
+
+    .hero h1 {
+        font-size: 1.2rem !important;
+    }
+
+    .hero p {
+        font-size: 0.75rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.55rem;
+        padding: 4px 12px;
+    }
+
+    .stat-number {
+        font-size: 1.1rem !important;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+    }
+
+    .hero-stats {
+        gap: 10px;
+    }
+
+    /* Tombol lebih kecil */
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.7rem;
+        max-width: 200px;
+    }
+
+    .hero-buttons .btn {
+        max-width: 180px;
+        padding: 8px 14px;
+    }
+
+    /* Card padding lebih kecil */
+    .card {
+        padding: 20px 15px;
+    }
+
+    .card-icon {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 15px;
+    }
+
+    .card-icon i {
+        font-size: 1.2rem;
+    }
+
+    .card h3 {
+        font-size: 0.9rem;
+    }
+
+    .card p {
+        font-size: 0.7rem;
+    }
+
+    /* Testimoni */
+    .testimonial-card {
+        padding: 15px;
+    }
+
+    .testimonial-text {
+        font-size: 0.8rem;
+    }
+
+    .testimonial-author img {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Berita */
+    .news-image {
+        height: 130px;
+    }
+
+    .news-content h3 {
+        font-size: 0.85rem;
+    }
+
+    .news-content p {
+        font-size: 0.7rem;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 30px 0 15px;
+    }
+
+    .footer-grid {
+        gap: 20px;
+        padding: 0 10px;
+    }
+
+    .footer-col h4 {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+
+    .footer-col p,
+    .footer-col ul li a,
+    .contact-info li {
+        font-size: 0.75rem;
+    }
+
+    .footer-logo span {
+        font-size: 1rem;
+    }
+
+    .footer-logo i {
+        font-size: 1.4rem;
+    }
+
+    .footer-social a {
+        width: 32px;
+        height: 32px;
+    }
+
+    .footer-bottom {
+        font-size: 0.65rem;
+        padding-top: 12px;
+    }
+
+    /* Modal */
+    .modal-content {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .modal-content h3 {
+        font-size: 1rem;
+    }
+
+    .modal-content p {
+        font-size: 0.75rem;
+    }
+
+    .tab-auth {
+        font-size: 0.85rem;
+        padding: 8px 5px;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    .btn-auth {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    /* Form pickup */
+    .pickup-form {
+        padding: 20px 15px;
+        border-radius: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .btn-submit {
+        padding: 12px 20px;
+        font-size: 0.85rem;
+    }
+
+    /* Kalkulator */
+    .calculator-form {
+        padding: 20px 15px;
+    }
+
+    .calculator-result {
+        padding: 25px 20px;
+    }
+
+    .result-value {
+        font-size: 2rem;
+    }
+
+    /* FAQ */
+    .faq-question {
+        padding: 15px;
+    }
+
+    .faq-question h3 {
+        font-size: 0.85rem;
+    }
+
+    .faq-answer {
+        font-size: 0.8rem;
+    }
+
+    /* Filter riwayat */
+    .filter-section {
+        gap: 10px;
+    }
+
+    .filter-search input {
+        padding: 10px 15px;
+        padding-left: 38px;
+        font-size: 0.8rem;
+    }
+
+    .filter-select {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+
+    /* Tabel */
+    .table-container {
+        padding: 10px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 6px 4px;
+        font-size: 0.65rem;
+    }
+
+    .status-badge {
+        font-size: 0.6rem;
+        padding: 3px 8px;
+    }
+
+    .action-btn {
+        padding: 3px 5px;
+        font-size: 0.7rem;
+    }
+
+    /* Back to top */
+    .back-to-top {
+        width: 35px;
+        height: 35px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .back-to-top i {
+        font-size: 0.8rem;
+    }
+
+    /* Notification */
+    .notification {
+        padding: 10px 16px;
+        font-size: 0.75rem;
+        bottom: 15px;
+        right: 15px;
+        max-width: 90%;
+    }
+
+    /* CTA */
+    .cta-section {
+        padding: 30px 0;
+    }
+
+    .cta-content h2 {
+        font-size: 1.1rem !important;
+    }
+
+    .cta-content p {
+        font-size: 0.75rem;
+    }
+
+    .cta-light {
+        padding: 30px 0;
+    }
+
+    .cta-light-content h2 {
+        font-size: 1.1rem;
+    }
+
+    .cta-light-content p {
+        font-size: 0.75rem;
+    }
+
+    .cta-light-buttons .btn {
+        max-width: 220px;
+        padding: 8px 16px;
+        font-size: 0.7rem;
+    }
+
+    /* Tips section */
+    .tips-section {
+        padding: 30px 0;
+    }
+
+    .tip-card {
+        padding: 15px;
+    }
+
+    .tip-card i {
+        font-size: 1.8rem;
+    }
+
+    .tip-card h4 {
+        font-size: 0.8rem;
+    }
+
+    .tip-card p {
+        font-size: 0.7rem;
+    }
+
+    /* Maps */
+    .maps-container iframe {
+        height: 250px;
+    }
+
+    .maps-list {
+        padding: 15px;
+    }
+
+    .maps-list h3 {
+        font-size: 1rem;
+    }
+
+    .location-link {
+        padding: 10px;
+    }
+
+    .location-link strong {
+        font-size: 0.8rem;
+    }
+
+    .location-link p {
+        font-size: 0.65rem;
+    }
+
+    .btn-map,
+    .btn-map-waze {
+        padding: 8px 12px;
+        font-size: 0.7rem;
+    }
+
+    /* Statistik card */
+    .stat-service-card {
+        padding: 20px 15px;
+    }
+
+    .stat-service-card i {
+        font-size: 1.8rem;
+    }
+
+    .stat-service-card .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .stat-service-card .stat-label {
+        font-size: 0.7rem;
     }
 }
